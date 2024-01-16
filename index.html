@@ -10,26 +10,34 @@
 
 <py-script>
 
-#pip install pyttsx3
-#pip install pyDictionary
+# Install necessary packages
+# pip install pyttsx3
+# pip install pyDictionary
 
 from PyDictionary import PyDictionary
 import pyttsx3
 
-def speak (audio):
-  engine = pyttsx3.init('sapi5')
-  engine.say (audio)
-  engine.runAndWait()
+def speak(audio):
+    engine = pyttsx3.init('sapi5')
+    engine.say(audio)
+    engine.runAndWait()
 
 def Dictionary():
-  dic = PyDictionary()
-  query = str(input("Enter :"))
-  word = dic.meaning(query)
-  print(word)
-  speak(word)
+    dic = PyDictionary()
+    query = str(input("Enter word: "))
+    meaning = dic.meaning(query)
 
-While True:
-  Dictionary()
+    if meaning:
+        print("Meaning:")
+        for part_of_speech, definitions in meaning.items():
+            print(f"{part_of_speech.capitalize()}: {', '.join(definitions)}")
+            speak(f"{query} as {part_of_speech}: {', '.join(definitions)}")
+    else:
+        print("Meaning not found for the given word.")
+
+while True:
+    Dictionary()
+
 
 
 </py-script>
